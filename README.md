@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Project Note
+1. project simply run by ng serve command
+2. There is a select drop down 
+3. Select one of them 
+4. There are 2 types of select Input/Radio
+5. Select or type some filter , according the result you want
+6. Press on the search key
+7. Get your result
