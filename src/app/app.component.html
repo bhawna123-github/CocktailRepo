@@ -1,0 +1,66 @@
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline" (submit)="onSubmit()">
+    <select class="form-control mr-sm-2" [(ngModel)]="searchType" [ngModelOptions]="{standalone: true}"
+      (change)="onSelect($event)">
+      <option disabled [value]="undefined">Search By</option>
+      <option [value]="search.name" *ngFor="let search of searchBy">Search by {{search.name}}</option>
+    </select>
+    <input *ngIf="inputType =='input'" class="form-control mr-sm-2" type="search"
+      placeholder="{{'Search By ' + searchType}}" aria-label="Search" [(ngModel)]="searchKey"
+      [ngModelOptions]="{standalone: true}">
+    <div *ngIf="inputType =='radio'">
+      {{radio1}} <input id="radio1" class="form-control mr-sm-2" type="radio" [value]="radio1" [(ngModel)]="searchKey"
+        [ngModelOptions]="{standalone: true}">
+      {{radio2}} <input id="radio2" class="form-control mr-sm-2" type="radio" [value]="radio2" [(ngModel)]="searchKey"
+        [ngModelOptions]="{standalone: true}">
+    </div>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+      [disabled]="!searchType && !searchKey">Search</button>
+  </form>
+</nav>
+<br />
+<div *ngIf="infoData && infoData.drinks && infoData.drinks.length>0 && !loading">
+  <div class="card" style="display:flex; width:25%;float:left" *ngFor="let info of infoData.drinks">
+    <img *ngIf="info.strDrinkThumb" src={{info.strDrinkThumb}} class="card-img-top" alt="...">
+    <div class="card-body" *ngIf="info.strDrink">
+      <h6 class="card-title" style="color:#28a745">{{info.strDrink}}</h6>
+      <span *ngIf="info.strInstructions"> {{ (info.strInstructions.length>60)? (info.strInstructions | slice:0:60)+'....':(info.strInstructions) }}
+      <span class="card-text" style="float:right">
+        <h6 *ngIf="info.strInstructions.length > 60">
+          <span class="badge badge-secondary" data-toggle="tooltip" data-placement="top" title={{info.strInstructions}}>
+            more
+          </span>
+        </h6>
+      </span>
+      </span>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngIf="info.strCategory">Category : {{info.strCategory}} </li>
+      <li class="list-group-item" *ngIf="info.strAlcoholic">Alcoholic :
+        {{info.strAlcoholic == "Alcoholic" ? 'Yes' : 'No'}}</li>
+      <li class="list-group-item" *ngIf="info.strGlass">Glass : {{info.strGlass}}</li>
+    </ul>
+    <div class="card-body" *ngIf="info.ingredeients && info.ingredeients.length>0">
+      Ingredients : {{info.ingredeients.join(', ')}}
+    </div>
+  </div>
+</div>
+<div *ngIf="infoData && infoData.ingredients && infoData.ingredients.length>0 && !loading">
+  <div class="card" style="display:flex; width:100%" *ngFor="let info of infoData.ingredients">
+    <div class="card-body" *ngIf="info.strIngredient">
+      <h6 class="card-title" style="color:#28a745">{{info.strIngredient}}</h6>
+      <span *ngIf="info.strDescription"> {{info.strDescription}}
+      </span>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngIf="info.strType">Type : {{info.strType}} </li>
+      <li class="list-group-item" *ngIf="info.strAlcohol">Alcoholic :
+        {{info.strAlcohol}}</li>
+    </ul>
+  </div>
+</div>
+ <div class="container" *ngIf="loading">
+  <div *ngFor="let i of searchBy" class="spinner-grow text-primary m-1" role="status" style="width: 3rem; height: 3rem;" >
+    <span class="sr-only">Loading...</span>
+  </div>
+  </div>
